@@ -1,1 +1,230 @@
 
+МІНІСТЕРСТВО ОСВІТИ ТА НАУКИ УКРАЇНИ
+
+ХАРКІВСЬКИЙ НАЦІОНАЛЬНИЙ УНІВЕРСИТЕТ РАДІОЕЛЕКТРОНІКИ
+
+
+Кафедра «Програмної інженерії»
+
+
+ЗВІТ
+з практичної роботи №1 
+з дисципліни “Архітектура програмного забезпечення” 
+на тему “Патерни проектування”
+
+
+
+
+Виконав ст. гр. ПЗПІ-22-4
+Галкін Микола Сергійович
+
+Перевірив:
+ст. викладач кафедри ПІ
+Сокорчук Ігор Петрович
+
+
+
+
+
+
+
+Харків 2025
+історія змін
+№	Дата	Версія звіту	Опис змін та виправлень
+    1 	30.03.2025	0.1	Створено звіт
+    2 	30.03.2025	0.1	Створено код (дивись додаток В)
+    3 	30.03.2025	0.1	Створено слайди презентації (дивись додаток Б)
+    4 	30.03.2025	0.1	Створено відеозапис доповіді (дивись додаток А)
+
+ЗАВДАННЯ
+Необхідно підготувати доповідь на тему: «фабричний метод (factory method)», створити та оформити слайди презентації доповіді, створити та опублікувати на YouTube відеозапис доповіді, створити програмний код, який розглядається у ПЗ1.
+
+ОПИС ВИКОНАНОЇ РОБОТИ
+
+    1. Обраний шаблон фабричний метод (factory method).
+    2. Створена презентація.
+    3. Створений код.
+    4. Написаний звіт.
+    5. Створений відео звіт.
+
+Висновки
+
+В ході практичного заняття досліджений фабричний метод. 
+
+
+ДОДАТОК А
+Посилання на відеозапис доповіді та текст хронологічного опису доповіді
+
+Відеозапис доповіді на YouTube:  https://www.youtube.com/watch?v=xyrwUptt8q0 
+
+Хронологічний опис доповіді:
+00:00 Початок
+00:15 Вступ
+00:33 Основна ідея
+00:51 Компоненти патерну
+01:19 UML діаграма патерну
+01:39 Поганий приклад - логіка
+02:22 Поганий приклад - клієнтський код
+02:27 Гарний приклад - продукт та його підкласи
+03:01 Гарний приклад - creator та його підкласи
+03:35 Гарний приклад - клієнтський код
+04:00 Переваги патерну
+04:50 Недоліки патерну
+05:14 Використання у проєктах
+06:07 Висновки
+06:33 Джерела
+ДОДАТОК Б
+Презентація
+
+Рисунок Б.1 – Титульний лист презентації
+
+
+Рисунок Б.2 – Вступ
+
+
+
+
+
+Рисунок Б.3 – Основна ідея
+
+
+Рисунок Б.4 – Основні компоненти патерну
+
+
+
+
+Рисунок Б.5 – UML- діаграма фабричного методу 
+
+
+Рисунок Б.6 – Приклад реалізації (поганий приклад)
+
+
+
+Рисунок Б.7 – Приклад реалізації (поганий приклад)
+
+
+Рисунок Б.8 – Приклад реалізації (гарний приклад)
+
+
+Рисунок Б.9 – Приклад реалізації (гарний приклад)
+
+
+Рисунок Б.10 – Приклад реалізації (гарний приклад)
+
+
+Рисунок Б.11 – Переваги фабричного методу
+
+
+Рисунок Б.12 – Недоліки фабричного методу
+
+
+Рисунок Б.13 – Використання у реальних проектах
+
+
+Рисунок Б.14 – Висновки
+
+
+Рисунок Б.15 – Перелік джерел
+ДОДАТОК В
+Програмний код
+
+badExample.js
+    1 	class Shipping {
+    2 	    constructor(type, zone, time) {
+    3 	        this.type = type
+    4 	        this.zone = zone
+    5 	        this.time = time
+    6 	    }
+    7 	
+    8 	    calculateCost(weight) {
+    9 	        if (this.type === "standard") {
+    10 	            if (this.zone === "urban") {
+    11 	                return weight * 5
+    12 	            } else {
+    13 	                return weight * 7
+    14 	            }
+    15 	        } else if (this.type === "express") {
+    16 	            if (this.time === "night") {
+    17 	                return weight * 12
+    18 	            } else {
+    19 	                return weight * 10
+    20 	            }
+    21 	        } else if (this.type === "overnight") {
+    22 	            return weight * 6
+    23 	        } else {
+    24 	            throw new Error("unknown type")
+    25 	        }
+    26 	    }
+    27 	}
+    28 	
+    29 	const standardShipping = new Shipping("standard", "urban", "day")
+    30 	console.log(standardShipping.calculateCost(2))
+    31 	
+    32 	const expressShipping = new Shipping("express", "suburban", "night")
+    33 	console.log(expressShipping.calculateCost(2))
+    34 	
+    35 	const overnightShipping = new Shipping("overnight", "rural", "day")
+    36 	console.log(overnightShipping.calculateCost(2))
+
+goodExample.js
+    1 	class Shipping {
+    2 	    calculateCost(weight, zone, time) {
+    3 	        throw new Error("unimplemented")
+    4 	    }
+    5 	}
+    6 	
+    7 	class StandardShipping extends Shipping {
+    8 	    calculateCost(weight, zone) {
+    9 	        return zone === "urban" ? weight * 5 : weight * 7
+    10 	    }
+    11 	}
+    12 	
+    13 	class ExpressShipping extends Shipping {
+    14 	    calculateCost(weight, _, time) {
+    15 	        return time === "night" ? weight * 12 : weight * 10
+    16 	    }
+    17 	}
+    18 	
+    19 	class OvernightShipping extends Shipping {
+    20 	    calculateCost(weight) {
+    21 	        return weight * 6
+    22 	    }
+    23 	}
+    24 	
+    25 	class ShippingCreator {
+    26 	    createShipping() {
+    27 	        throw new Error("unimplemented")
+    28 	    }
+    29 	
+    30 	    calculateCost(weight, zone, time) {
+    31 	        const shipping = this.createShipping()
+    32 	        return shipping.calculateCost(weight, zone, time)
+    33 	    }
+    34 	}
+    35 	
+    36 	class StandardShippingCreator extends ShippingCreator {
+    37 	    createShipping() {
+    38 	        return new StandardShipping()
+    39 	    }
+    40 	}
+    41 	
+    42 	class ExpressShippingCreator extends ShippingCreator {
+    43 	    createShipping() {
+    44 	        return new ExpressShipping()
+    45 	    }
+    46 	}
+    47 	
+    48 	class OvernightShippingCreator extends ShippingCreator {
+    49 	    createShipping() {
+    50 	        return new OvernightShipping()
+    51 	    }
+    52 	}
+    53 	
+    54 	const standardCreator = new StandardShippingCreator()
+    55 	console.log(standardCreator.calculateCost(2, "urban", "day"))
+    56 	
+    57 	const expressCreator = new ExpressShippingCreator()
+    58 	console.log(expressCreator.calculateCost(2, "suburban", "night"))
+    59 	
+    60 	const overnightCreator = new OvernightShippingCreator()
+    61 	console.log(overnightCreator.calculateCost(2, "rural", "day"))
