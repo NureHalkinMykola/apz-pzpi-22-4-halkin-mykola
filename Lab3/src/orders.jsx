@@ -298,7 +298,7 @@ useEffect(() => {
 }, [isAdmin]);
 
 const handleStopActivity = (orderId) => {
-	fetch(`/orders/stopActivity/${orderId}`, {
+	fetch(`/order/stopActivity/${orderId}`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		credentials: 'include'
